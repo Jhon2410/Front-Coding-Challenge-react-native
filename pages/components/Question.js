@@ -1,10 +1,11 @@
 import { View, Text, Button, StyleSheet } from "react-native-web";
-export default function Question({ pregunta }) {
+import { connect } from "react-redux";
+
+function Question({ pregunta }) {
 
   return (
     <View>
       <Text style={styles.pregunta}>{pregunta.question.replaceAll("&quot;","'").replaceAll("&#039;","'")}</Text>
-   
     </View>
   );
 }
@@ -25,3 +26,29 @@ const styles = StyleSheet.create({
       top:0
   }
 });
+
+
+const mapStateToProps = (state) => ({
+  puntos: state.puntos,
+  respuestas: state.respuestas,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  reset() {
+    dispatch({
+      type: "reset_notify",
+    });
+  },
+  agregar(){
+    dispatch({
+      type:"agregar_puntos"
+    })
+  },
+  restar(){
+    dispatch({
+      type:"restar_puntos"
+    })
+  }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Question);
+
