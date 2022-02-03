@@ -1,14 +1,11 @@
 import React from "react";
 import { ImageBackground, StyleSheet, Text, View, Button } from "react-native";
-import { NativeRouter, Route, Link, Router, Routes } from "react-router-native";
-import Game from "./Game";
 const image = {
   uri: "https://images.unsplash.com/photo-1553481187-be93c21490a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FtZXxlbnwwfHwwfHw%3D&w=1000&q=80",
 };
 
 
-const Home = () => (
-  <NativeRouter>
+const Home = ({navigation}) => (
     <View style={styles.container}>
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
         <Text style={styles.welcome}>welcome to the trivial game</Text>
@@ -18,22 +15,17 @@ const Home = () => (
         </Text>
         <View style={styles.play}>
           <Text style={styles.text}>can you score 100%?</Text>
-        
-         
            <Button
             title="Begin"
             color="#0f0"
+            onPress={() => navigation.navigate('game')}
           />
         </View>
       </ImageBackground>
-      <Routes>
-      <Route  path="/game" component={Game} />
 
-      </Routes>
 
     
     </View>
-  </NativeRouter>
 );
 
 const styles = StyleSheet.create({
