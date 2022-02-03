@@ -5,12 +5,11 @@ import Question from "./components/Question";
 import axios from "axios";
 import { connect } from "react-redux";
 
-const Game = ({ navigation, puntos, agregar, restar }) => {
+const Game = ({ navigation, puntos, agregar, setRespuestas}) => {
 
   const [question, setQuestions] = useState([]);
   const [indice, setIndice] = useState(0);
   const [categoria, setCategoria] = useState("");
-  const [score, setScore] = useState([]);
   useEffect(async () => {
     const res = await axios.get(
       "https://opentdb.com/api.php?amount=10&difficulty=hard&type=boolean"
@@ -33,20 +32,21 @@ const Game = ({ navigation, puntos, agregar, restar }) => {
       <View>
         <Text>{game}</Text>
       </View>
-        {indice+1 == 10 ? <Text>Error{navigation.navigate("results")}</Text>: null }
+        {indice == 10 ? <Text>Error{navigation.navigate("results")}</Text>: null }
       <View style={styles.options}>
         <Button
           title="True"
           color="#0f0"
           onPress={() => {
             let idx = indice;
-            score.push(true);
             setCategoria(question[indice].category);
             setIndice((idx += 1));
             if(question[indice].correct_answer === "True"){
               agregar()
+              setRespuestas({estado:"true", idx, question:question[indice] })
+            }else{
+              setRespuestas({estado:"true", idx, question:question[indice] })
             }
-            
           }}
         />
         <Button
@@ -54,11 +54,14 @@ const Game = ({ navigation, puntos, agregar, restar }) => {
           color="#f00"
           onPress={() => {
             let idx = indice;
-            score.push(false);
             setCategoria(question[indice].category);
             setIndice((idx += 1));
-            if(question[indice].correct_answer === "False"){
-              restar()
+
+            if(question[indice].correct_answer == "False"){
+            setRespuestas({estado:"false", idx, question:question[indice] })
+            agregar()
+            }else{
+              setRespuestas({estado:"false", idx, question:question[indice] })
             }
           }}
         />
@@ -109,7 +112,14 @@ const mapDispatchToProps = (dispatch) => ({
   },
   restar(){
     dispatch({
-      type:"restar_puntos"
+      type:"restar_puntos",
+
+    })
+  },
+  setRespuestas(state){
+    dispatch({
+      type:"agregar_respuestas",
+      state: state
     })
   }
 });

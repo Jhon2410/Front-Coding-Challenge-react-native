@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet } from "react-native-web";
+import { View, Text, StyleSheet } from "react-native-web";
 import { connect } from "react-redux";
 
 function Question({ pregunta }) {
