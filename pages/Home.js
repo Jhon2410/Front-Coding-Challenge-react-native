@@ -17,12 +17,12 @@ const Home = ({navigation}) => (
           <Text style={styles.text}>can you score 100%?</Text>
            <Button
             title="Begin"
+            style={styles.btn}
             color="#0f0"
             onPress={() => navigation.navigate('game')}
           />
         </View>
       </ImageBackground>
-
 
     
     </View>
@@ -47,8 +47,14 @@ const styles = StyleSheet.create({
   },
   play: {
     position: "absolute",
-    top: "80%",
-    width: "100%",
+    top: "75%",
+    left:"40%",
+    right:"50%",
+    textAlign:"center",
+    width:300,
+  },
+  btn:{
+ 
   },
   welcome: {
     color: "white",
